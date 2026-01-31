@@ -1,91 +1,111 @@
 // src/app/contact/page.tsx
+import Link from 'next/link'
+import PageShell from '@/components/PageShell'
+
 export const metadata = {
-  title: 'Contato | Portfólio',
-  description: 'Como falar comigo e ver meus links.',
+  title: 'Contato | Webster',
+  description: 'Entre em contato comigo por email, WhatsApp ou redes.',
 }
 
 export default function ContactPage() {
   return (
-    <main style={styles.main}>
-      <section style={styles.container}>
-        <header style={styles.header}>
-          <h1 style={styles.title}>Contato</h1>
-          <p style={styles.subtitle}>
-            Quer conversar sobre oportunidades, freelas ou projetos? Me chama
-            por aqui:
-          </p>
-        </header>
+    <PageShell
+      title="Contato"
+      description="Vamos conversar sobre oportunidades, projetos ou ideias."
+    >
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ContactCard
+          title="Email"
+          subtitle="Resposta direta"
+          value="ti.spacacheri@gmail.com"
+          href="mailto:ti.spacacheri@gmail.com"
+          icon="✉️"
+        />
 
-        <div style={styles.grid}>
-          <a
-            style={styles.card}
-            href="mailto:ti.spacacheri@gmail.com"
-            aria-label="Enviar email para Webster Spacacheri"
-          >
-            <h2 style={styles.cardTitle}>Email</h2>
-            <p style={styles.cardText}>ti.spacacheri@gmail.com</p>
-            <span style={styles.hint}>Clique para enviar</span>
-          </a>
-          <a
-            style={styles.card}
-            href="https://github.com/Webster-TI"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Acessar GitHub de Webster Spacacheri"
-          >
-            <h2 style={styles.cardTitle}>GitHub</h2>
-            <p style={styles.cardText}>github.com/Webster-TI</p>
-            <span style={styles.hint}>Ver repositórios</span>
-          </a>
+        <ContactCard
+          title="WhatsApp"
+          subtitle="Mensagem rápida"
+          value="+55 11 94369-9083"
+          href="https://wa.me/5511943699083"
+          icon="💬"
+          external
+        />
 
-          <a
-            style={styles.card}
-            href="https://www.linkedin.com/in/webster-spacacheri/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Acessar LinkedIn de Webster Spacacheri"
-          >
-            <h2 style={styles.cardTitle}>LinkedIn</h2>
-            <p style={styles.cardText}>linkedin.com/in/webster-spacacheri</p>
-            <span style={styles.hint}>Abrir perfil</span>
-          </a>
-        </div>
+        <ContactCard
+          title="GitHub"
+          subtitle="Código e projetos"
+          value="github.com/Webster-TI"
+          href="https://github.com/Webster-TI"
+          icon="💻"
+          external
+        />
 
-        <p style={styles.footerNote}>
-          Estou aberto a oportunidades, projetos e colaborações.
-        </p>
-      </section>
-    </main>
+        <ContactCard
+          title="LinkedIn"
+          subtitle="Perfil profissional"
+          value="linkedin.com/in/webster-spacacheri"
+          href="https://www.linkedin.com/in/webster-spacacheri/"
+          icon="🔗"
+          external
+        />
+      </div>
+    </PageShell>
   )
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  main: { minHeight: '100vh', padding: '48px 20px' },
-  container: { maxWidth: 980, margin: '0 auto' },
-  header: { marginBottom: 18 },
-  title: { fontSize: 36, margin: 0, letterSpacing: -0.5 },
-  subtitle: { marginTop: 10, opacity: 0.85, maxWidth: 760, lineHeight: 1.5 },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-    gap: 16,
-    marginTop: 18,
-  },
-  card: {
-    textDecoration: 'none',
-    color: 'inherit',
-    borderRadius: 16,
-    padding: 18,
-    border: '1px solid rgba(255,255,255,0.12)',
-    background: 'rgba(0,0,0,0.18)',
-    backdropFilter: 'blur(10px)',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.18)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 8,
-  },
-  cardTitle: { margin: 0, fontSize: 18 },
-  cardText: { margin: 0, opacity: 0.9 },
-  hint: { fontSize: 12, opacity: 0.7, marginTop: 2 },
-  footerNote: { marginTop: 18, opacity: 0.8 },
+/* ===============================
+   CARD COMPONENT
+================================ */
+
+type ContactCardProps = {
+  title: string
+  subtitle: string
+  value: string
+  href: string
+  icon: string
+  external?: boolean
+}
+
+function ContactCard({
+  title,
+  subtitle,
+  value,
+  href,
+  icon,
+  external,
+}: ContactCardProps) {
+  return (
+    <Link
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      className="
+        group
+        glass-card
+        rounded-3xl
+        p-6
+        transition
+        hover:-translate-y-1
+        hover:shadow-2xl
+      "
+    >
+      <div className="flex items-center gap-3">
+        <span className="text-2xl transition-transform duration-300 group-hover:scale-110">
+          {icon}
+        </span>
+
+        <h2 className="text-lg font-semibold text-[color:var(--ink)]">
+          {title}
+        </h2>
+      </div>
+
+      <p className="mt-3 text-sm text-[color:var(--ink-muted)]">{subtitle}</p>
+
+      <p className="mt-2 text-[color:var(--ink-muted)]">{value}</p>
+
+      <span className="mt-4 inline-block text-sm font-medium text-[color:var(--violet)]">
+        Abrir →
+      </span>
+    </Link>
+  )
 }

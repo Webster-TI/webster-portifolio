@@ -1,0 +1,5 @@
+export { default as SentimentIcon } from './SentimentIcon'
+export { default as ForumIcon } from './ForumIcon'
+export { default as BookIcon } from './BookIcon'
+export { default as CurrencyIcon } from './CurrencyIcon'
+export { default as BankIcon } from './BankIcon'
